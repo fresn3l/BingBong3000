@@ -1,10 +1,11 @@
 import Link from "next/link";
 import type { HeroBlock } from "@/lib/content/types";
+import { SafeImage } from "@/components/ui/SafeImage";
 
 export function HeroBlockView({ block }: { block: HeroBlock }) {
   return (
     <section className="site-section relative overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(var(--color-accent)/0.18),transparent_55%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,color-mix(in_srgb,var(--color-accent)_18%,transparent),transparent_55%)]" />
       <div className="site-container relative grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
         <div className="animate-rise max-w-3xl">
           {block.eyebrow ? (
@@ -33,16 +34,18 @@ export function HeroBlockView({ block }: { block: HeroBlock }) {
             ) : null}
           </div>
         </div>
-        {block.imageUrl ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={block.imageUrl}
-            alt=""
-            className="animate-fade aspect-[4/5] w-full object-cover"
-          />
-        ) : (
-          <div className="animate-fade hidden aspect-[4/5] w-full bg-[linear-gradient(145deg,var(--color-surface),var(--color-border))] lg:block" />
-        )}
+        <div className="relative hidden aspect-[4/5] w-full overflow-hidden bg-[linear-gradient(145deg,var(--color-surface),var(--color-border))] lg:block">
+          {block.imageUrl ? (
+            <SafeImage
+              src={block.imageUrl}
+              alt=""
+              fill
+              sizes="(min-width: 1024px) 40vw, 100vw"
+              className="animate-fade object-cover"
+              priority
+            />
+          ) : null}
+        </div>
       </div>
     </section>
   );

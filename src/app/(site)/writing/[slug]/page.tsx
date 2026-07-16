@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPostBySlug } from "@/lib/content/repository";
+import { absoluteUrl } from "@/lib/site-url";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -11,9 +12,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const post = await getPostBySlug(slug);
   if (!post) return {};
+  const path = `/writing/${post.slug}`;
   return {
     title: post.title,
     description: post.summary,
+    alternates: { canonical: path },
+    openGraph: {
+      title: post.title,
+      description: post.summary,
+      url: absoluteUrl(path),
+      type: "article",
+    },
   };
 }
 

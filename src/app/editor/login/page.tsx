@@ -37,8 +37,9 @@ export default function EditorLoginPage() {
         <div>
           <h1 className="text-2xl font-semibold">Site editor</h1>
           <p className="mt-2 text-sm text-zinc-400">
-            Local mode: password only (default <code>changeme</code>). With Supabase,
-            use your admin email + password.
+            Production uses Supabase email + password. Locally you can sign in with
+            password <code>changeme</code> (or <code>ADMIN_PASSWORD</code>) when
+            Supabase is not configured.
           </p>
         </div>
         <label className="block">

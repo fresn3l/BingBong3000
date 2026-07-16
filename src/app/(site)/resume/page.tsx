@@ -3,14 +3,24 @@ import Link from "next/link";
 import { PrintResumeButton } from "@/components/resume/PrintResumeButton";
 import { ResumeDocument } from "@/components/resume/ResumeDocument";
 import { getResume, getSettings } from "@/lib/content/repository";
+import { absoluteUrl } from "@/lib/site-url";
 
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
   const resume = await getResume();
+  const title = `Resume · ${resume.name}`;
+  const description = resume.summary || `${resume.name} — ${resume.headline}`;
   return {
-    title: `Resume · ${resume.name}`,
-    description: resume.summary || `${resume.name} — ${resume.headline}`,
+    title,
+    description,
+    alternates: { canonical: "/resume" },
+    openGraph: {
+      title,
+      description,
+      url: absoluteUrl("/resume"),
+      type: "profile",
+    },
   };
 }
 

@@ -6,8 +6,8 @@ Personal hire-me site for a CS → sales/solutions engineering path, with a full
 
 - **Next.js** (App Router) + TypeScript + Tailwind CSS
 - **Local JSON store** (`data/site.json`) so the site works without Supabase
-- **Supabase** (optional) for auth, Postgres persistence, and media storage
-- Deploy on **Vercel**
+- **Supabase** for production auth, Postgres persistence, and media storage (local JSON for development)
+- Deploy on **Vercel** (custom domain + Analytics)
 
 ## Quick start
 
@@ -34,11 +34,14 @@ See [`.env.local.example`](.env.local.example).
 
 | Variable | Purpose |
 | --- | --- |
+| `NEXT_PUBLIC_SITE_URL` | Canonical site URL (custom domain) for SEO/sitemap |
 | `ADMIN_PASSWORD` | Local editor password when Supabase is not configured |
 | `ADMIN_SESSION_SECRET` | Signs the local admin cookie |
+| `ALLOW_LOCAL_ADMIN` | Set `true` only to force local admin in production (not recommended) |
 | `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon key |
 | `SUPABASE_SERVICE_ROLE_KEY` | Server-side writes / storage (keep secret) |
+| `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` | Optional Plausible analytics domain |
 | `RESEND_API_KEY` / `CONTACT_TO_EMAIL` | Optional email delivery for the contact form |
 
 Without Supabase, content persists to `data/site.json` and uploads go to `public/uploads/`.
@@ -72,12 +75,14 @@ Edit resume content in the admin under the **Resume** tab.
 
 ## Deploy (Vercel)
 
-1. Push this repo to GitHub
-2. Import in Vercel
-3. Set the same env vars (for production, configure Supabase so saves persist across serverless instances)
-4. Deploy
+See **[`DEPLOY.md`](DEPLOY.md)** for the full production checklist:
 
-Local file persistence does **not** survive on Vercel’s read-only filesystem — use Supabase for production saves.
+- Custom domain DNS
+- Supabase required for editor saves
+- SEO (`/sitemap.xml`, `/robots.txt`, Person JSON-LD)
+- Vercel Analytics + Speed Insights (and optional Plausible)
+
+Local file persistence does **not** survive on Vercel — use Supabase for production saves.
 
 ## Open questions
 

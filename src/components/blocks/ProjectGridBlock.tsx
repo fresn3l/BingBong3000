@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ProjectGridBlock } from "@/lib/content/types";
+import { SafeImage } from "@/components/ui/SafeImage";
 
 export function ProjectGridBlockView({ block }: { block: ProjectGridBlock }) {
   return (
@@ -22,12 +23,15 @@ export function ProjectGridBlockView({ block }: { block: ProjectGridBlock }) {
             const inner = (
               <>
                 {project.imageUrl ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={project.imageUrl}
-                    alt=""
-                    className="mb-4 aspect-video w-full object-cover"
-                  />
+                  <div className="relative mb-4 aspect-video w-full overflow-hidden bg-[var(--color-border)]">
+                    <SafeImage
+                      src={project.imageUrl}
+                      alt=""
+                      fill
+                      sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                      className="object-cover"
+                    />
+                  </div>
                 ) : null}
                 <h3 className="text-xl font-semibold text-[var(--color-fg)]">
                   {project.title}

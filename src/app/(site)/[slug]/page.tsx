@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Blocks } from "@/components/blocks/BlockRenderer";
 import { getPageBySlug } from "@/lib/content/repository";
+import { absoluteUrl } from "@/lib/site-url";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -11,9 +12,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const page = await getPageBySlug(slug);
   if (!page) return {};
+  const path = `/${page.slug}`;
   return {
     title: page.title,
     description: page.seoDescription,
+    alternates: { canonical: path },
+    openGraph: {
+      title: page.title,
+      description: page.seoDescription,
+      url: absoluteUrl(path),
+      type: "website",
+    },
   };
 }
 

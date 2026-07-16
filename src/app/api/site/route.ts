@@ -24,6 +24,13 @@ export async function PUT(request: Request) {
     resume: body.resume,
     posts: body.posts ?? [],
     leads: body.leads ?? [],
+  }).catch((err: unknown) => {
+    return NextResponse.json(
+      { error: err instanceof Error ? err.message : "Save failed" },
+      { status: 500 },
+    );
   });
+
+  if (saved instanceof NextResponse) return saved;
   return NextResponse.json(saved);
 }

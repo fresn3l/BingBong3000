@@ -174,12 +174,21 @@ export async function saveSiteData(data: SiteData): Promise<SiteData> {
     })),
   });
 
+  const isProd = process.env.NODE_ENV === "production";
+
+  if (isProd && !isSupabaseConfigured()) {
+    throw new Error(
+      "Production saves require Supabase. Set NEXT_PUBLIC_SUPABASE_URL and keys.",
+    );
+  }
+
   if (isSupabaseConfigured()) {
-    try {
-      await saveToSupabase(next);
-    } catch {
-      // Fall through to local persistence so the editor still works.
+    await saveToSupabase(next);
+    // Still mirror locally in development for easy inspection.
+    if (!isProd) {
+      await writeLocal(next);
     }
+    return next;
   }
 
   await writeLocal(next);

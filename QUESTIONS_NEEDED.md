@@ -47,8 +47,11 @@ Who customizes the site?
 - [ ] Comments or sharing features needed later?
 
 ### Analytics & SEO
-- [ ] Analytics (e.g. Vercel Analytics, Plausible, GA)?
+- [x] Analytics (e.g. Vercel Analytics, Plausible, GA)?
+  - **Shipped:** Vercel Analytics + Speed Insights; optional Plausible via `NEXT_PUBLIC_PLAUSIBLE_DOMAIN`
 - [ ] Target keywords or job titles for SEO copy?
+  - SEO plumbing shipped (sitemap, robots, JSON-LD, per-page metadata); copy still placeholder
+
 
 ### Resume
 - [x] Resume PDF ready to upload, or placeholder link for now?
