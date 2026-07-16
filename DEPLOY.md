@@ -61,7 +61,18 @@ Submit `https://yourdomain.com/sitemap.xml` in Google Search Console when ready.
 1. In Vercel → Project → **Analytics** → Enable
 2. Optionally enable **Speed Insights**
 
-**Optional Plausible:** set `NEXT_PUBLIC_PLAUSIBLE_DOMAIN=yourdomain.com` and add the domain in Plausible.
+**Custom engagement events** (visible under Analytics → Events after enable):
+
+| Event | When |
+| --- | --- |
+| `Hire Me Click` | Header/footer/hero/CTA hire buttons |
+| `Contact Submit` | Successful contact form send |
+| `Contact Submit Error` | Failed contact send |
+| `Resume Print` | Print / Save PDF on `/resume` |
+| `Scroll Depth` | 25 / 50 / 75 / 100% scrolled (`percent`, `path`) |
+| `Time On Page` | 15s / 30s / 60s / 120s + final on leave (`seconds`, `path`) |
+
+**Optional Plausible:** set `NEXT_PUBLIC_PLAUSIBLE_DOMAIN=yourdomain.com` and add the domain in Plausible (same event names are forwarded).
 
 ## 6. Recommended Vercel env checklist
 

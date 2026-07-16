@@ -1,6 +1,17 @@
-import Link from "next/link";
 import type { HeroBlock } from "@/lib/content/types";
+import { HireMeLink, TrackedLink } from "@/components/analytics/TrackedLink";
 import { SafeImage } from "@/components/ui/SafeImage";
+import { AnalyticsEvents } from "@/lib/analytics";
+
+function isHireCta(label?: string, href?: string) {
+  const text = (label || "").toLowerCase();
+  return Boolean(
+    href === "/contact" ||
+      text.includes("hire") ||
+      text.includes("get in touch") ||
+      text.includes("contact"),
+  );
+}
 
 export function HeroBlockView({ block }: { block: HeroBlock }) {
   return (
@@ -23,14 +34,46 @@ export function HeroBlockView({ block }: { block: HeroBlock }) {
           ) : null}
           <div className="mt-8 flex flex-wrap gap-3">
             {block.primaryCtaLabel && block.primaryCtaHref ? (
-              <Link href={block.primaryCtaHref} className="btn-primary">
-                {block.primaryCtaLabel}
-              </Link>
+              isHireCta(block.primaryCtaLabel, block.primaryCtaHref) ? (
+                <HireMeLink
+                  href={block.primaryCtaHref}
+                  location="hero-primary"
+                  className="btn-primary"
+                >
+                  {block.primaryCtaLabel}
+                </HireMeLink>
+              ) : (
+                <TrackedLink
+                  href={block.primaryCtaHref}
+                  className="btn-primary"
+                  event="CTA Click"
+                  eventProps={{
+                    location: "hero-primary",
+                    label: block.primaryCtaLabel,
+                    href: block.primaryCtaHref,
+                  }}
+                >
+                  {block.primaryCtaLabel}
+                </TrackedLink>
+              )
             ) : null}
             {block.secondaryCtaLabel && block.secondaryCtaHref ? (
-              <Link href={block.secondaryCtaHref} className="btn-secondary">
+              <TrackedLink
+                href={block.secondaryCtaHref}
+                className="btn-secondary"
+                event={
+                  isHireCta(block.secondaryCtaLabel, block.secondaryCtaHref)
+                    ? AnalyticsEvents.hireMeClick
+                    : "CTA Click"
+                }
+                eventProps={{
+                  location: "hero-secondary",
+                  label: block.secondaryCtaLabel,
+                  href: block.secondaryCtaHref,
+                }}
+              >
                 {block.secondaryCtaLabel}
-              </Link>
+              </TrackedLink>
             ) : null}
           </div>
         </div>

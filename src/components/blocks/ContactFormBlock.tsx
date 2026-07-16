@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import type { ContactFormBlock } from "@/lib/content/types";
+import { AnalyticsEvents, trackEvent } from "@/lib/analytics";
 
 export function ContactFormBlockView({ block }: { block: ContactFormBlock }) {
   const [status, setStatus] = useState<"idle" | "loading" | "done" | "error">(
@@ -15,6 +16,7 @@ export function ContactFormBlockView({ block }: { block: ContactFormBlock }) {
     setError("");
     const form = e.currentTarget;
     const data = new FormData(form);
+    const hasCompany = Boolean(String(data.get("company") || "").trim());
 
     try {
       const res = await fetch("/api/contact", {
@@ -31,9 +33,11 @@ export function ContactFormBlockView({ block }: { block: ContactFormBlock }) {
         const body = await res.json().catch(() => ({}));
         throw new Error(body.error || "Failed to send");
       }
+      trackEvent(AnalyticsEvents.contactSubmit, { hasCompany });
       setStatus("done");
       form.reset();
     } catch (err) {
+      trackEvent(AnalyticsEvents.contactSubmitError);
       setStatus("error");
       setError(err instanceof Error ? err.message : "Something went wrong");
     }

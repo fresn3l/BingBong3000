@@ -1,7 +1,19 @@
-import Link from "next/link";
 import type { CtaBlock } from "@/lib/content/types";
+import { HireMeLink, TrackedLink } from "@/components/analytics/TrackedLink";
+
+function isHireCta(label: string, href: string) {
+  const text = label.toLowerCase();
+  return (
+    href === "/contact" ||
+    text.includes("hire") ||
+    text.includes("get in touch") ||
+    text.includes("contact")
+  );
+}
 
 export function CtaBlockView({ block }: { block: CtaBlock }) {
+  const hire = isHireCta(block.buttonLabel, block.buttonHref);
+
   return (
     <section className="site-section">
       <div className="site-container">
@@ -12,9 +24,28 @@ export function CtaBlockView({ block }: { block: CtaBlock }) {
           {block.body ? (
             <p className="mt-4 max-w-xl text-[var(--color-muted)]">{block.body}</p>
           ) : null}
-          <Link href={block.buttonHref} className="btn-primary mt-8 inline-flex">
-            {block.buttonLabel}
-          </Link>
+          {hire ? (
+            <HireMeLink
+              href={block.buttonHref}
+              location="cta-block"
+              className="btn-primary mt-8 inline-flex"
+            >
+              {block.buttonLabel}
+            </HireMeLink>
+          ) : (
+            <TrackedLink
+              href={block.buttonHref}
+              className="btn-primary mt-8 inline-flex"
+              event="CTA Click"
+              eventProps={{
+                location: "cta-block",
+                label: block.buttonLabel,
+                href: block.buttonHref,
+              }}
+            >
+              {block.buttonLabel}
+            </TrackedLink>
+          )}
         </div>
       </div>
     </section>

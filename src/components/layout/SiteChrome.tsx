@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { SiteSettings } from "@/lib/content/types";
+import { HireMeLink } from "@/components/analytics/TrackedLink";
 import { ThemeToggle } from "./ThemeToggle";
 
 export function SiteHeader({ settings }: { settings: SiteSettings }) {
@@ -25,9 +26,7 @@ export function SiteHeader({ settings }: { settings: SiteSettings }) {
         </nav>
         <div className="flex items-center gap-2">
           <ThemeToggle />
-          <Link href="/contact" className="btn-primary text-sm">
-            Hire me
-          </Link>
+          <HireMeLink location="header" className="btn-primary text-sm" />
         </div>
       </div>
       <nav className="site-container flex gap-4 overflow-x-auto pb-3 text-sm text-[var(--color-muted)] md:hidden">
@@ -65,6 +64,10 @@ export function SiteFooter({ settings }: { settings: SiteSettings }) {
           {settings.resumeUrl ? (
             <a href={settings.resumeUrl}>Resume</a>
           ) : null}
+          <HireMeLink
+            location="footer"
+            className="text-[var(--color-accent)] hover:underline"
+          />
           <ThemeToggle />
         </div>
       </div>
