@@ -69,6 +69,8 @@ Submit `https://yourdomain.com/sitemap.xml` in Google Search Console when ready.
 | `Contact Submit` | Successful contact form send |
 | `Contact Submit Error` | Failed contact send |
 | `Resume Print` | Print / Save PDF on `/resume` |
+| `Calendly View` | Visitor opened the Calendly embed |
+| `Calendly Booked` | Visitor scheduled an event |
 | `Scroll Depth` | 25 / 50 / 75 / 100% scrolled (`percent`, `path`) |
 | `Time On Page` | 15s / 30s / 60s / 120s + final on leave (`seconds`, `path`) |
 

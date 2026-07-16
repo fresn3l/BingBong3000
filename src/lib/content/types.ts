@@ -5,6 +5,7 @@ export type BlockType =
   | "articleList"
   | "cta"
   | "contactForm"
+  | "calendly"
   | "image"
   | "stats"
   | "services";
@@ -90,6 +91,16 @@ export interface ContactFormBlock {
   emailFallback?: string;
 }
 
+export interface CalendlyBlock {
+  id: string;
+  type: "calendly";
+  heading?: string;
+  intro?: string;
+  /** Full Calendly event URL, e.g. https://calendly.com/you/15min */
+  url?: string;
+  height?: number;
+}
+
 export interface ImageBlock {
   id: string;
   type: "image";
@@ -132,6 +143,7 @@ export type Block =
   | ArticleListBlock
   | CtaBlock
   | ContactFormBlock
+  | CalendlyBlock
   | ImageBlock
   | StatsBlock
   | ServicesBlock;
@@ -180,6 +192,8 @@ export interface SiteSettings {
   };
   theme: ThemeSettings;
   resumeUrl?: string;
+  /** Default Calendly scheduling URL used when a calendly block has no URL */
+  calendlyUrl?: string;
 }
 
 export interface Page {
@@ -272,6 +286,7 @@ export const BLOCK_TYPE_LABELS: Record<BlockType, string> = {
   articleList: "Article list",
   cta: "Call to action",
   contactForm: "Contact form",
+  calendly: "Calendly",
   image: "Image",
   stats: "Stats",
   services: "Services",

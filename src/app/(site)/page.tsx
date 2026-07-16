@@ -30,5 +30,5 @@ export default async function HomePage() {
   const data = await getSiteData();
   const page = data.pages.find((p) => p.slug === "home" && p.published);
   if (!page) notFound();
-  return <Blocks blocks={page.blocks} projects={data.projects} />;
+  return <Blocks blocks={page.blocks} projects={data.projects} calendlyUrl={data.settings.calendlyUrl} />;
 }

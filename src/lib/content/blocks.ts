@@ -60,6 +60,14 @@ export function createEmptyBlock(type: BlockType): Block {
         intro: "Send a message.",
         emailFallback: "hello@example.com",
       };
+    case "calendly":
+      return {
+        id,
+        type: "calendly",
+        heading: "Book a call",
+        intro: "Choose a time that works for you.",
+        height: 700,
+      };
     case "image":
       return {
         id,

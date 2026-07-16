@@ -45,6 +45,8 @@ export const AnalyticsEvents = {
   contactSubmit: "Contact Submit",
   contactSubmitError: "Contact Submit Error",
   resumePrint: "Resume Print",
+  calendlyView: "Calendly View",
+  calendlyBooked: "Calendly Booked",
   scrollDepth: "Scroll Depth",
   timeOnPage: "Time On Page",
 } as const;

@@ -5,6 +5,7 @@ import { ProjectGridBlockView } from "./ProjectGridBlock";
 import { ArticleListBlockView } from "./ArticleListBlock";
 import { CtaBlockView } from "./CtaBlock";
 import { ContactFormBlockView } from "./ContactFormBlock";
+import { CalendlyBlockView } from "./CalendlyBlock";
 import { ImageBlockView } from "./ImageBlock";
 import { StatsBlockView } from "./StatsBlock";
 import { ServicesBlockView } from "./ServicesBlock";
@@ -12,9 +13,11 @@ import { ServicesBlockView } from "./ServicesBlock";
 export function BlockRenderer({
   block,
   projects = [],
+  calendlyUrl,
 }: {
   block: Block;
   projects?: Project[];
+  calendlyUrl?: string;
 }) {
   switch (block.type) {
     case "hero":
@@ -29,6 +32,8 @@ export function BlockRenderer({
       return <CtaBlockView block={block} />;
     case "contactForm":
       return <ContactFormBlockView block={block} />;
+    case "calendly":
+      return <CalendlyBlockView block={block} fallbackUrl={calendlyUrl} />;
     case "image":
       return <ImageBlockView block={block} />;
     case "stats":
@@ -43,14 +48,21 @@ export function BlockRenderer({
 export function Blocks({
   blocks,
   projects = [],
+  calendlyUrl,
 }: {
   blocks: Block[];
   projects?: Project[];
+  calendlyUrl?: string;
 }) {
   return (
     <div className="flex flex-col">
       {blocks.map((block) => (
-        <BlockRenderer key={block.id} block={block} projects={projects} />
+        <BlockRenderer
+          key={block.id}
+          block={block}
+          projects={projects}
+          calendlyUrl={calendlyUrl}
+        />
       ))}
     </div>
   );

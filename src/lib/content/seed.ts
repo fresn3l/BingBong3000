@@ -24,6 +24,7 @@ export const seedData: SiteData = {
       email: "hello@example.com",
     },
     resumeUrl: "/resume",
+    calendlyUrl: "https://calendly.com/your-link/15min",
     theme: {
       // Light: cool ivory + navy + hunter green (corporate / country-club)
       colors: {
@@ -292,10 +293,18 @@ export const seedData: SiteData = {
         {
           id: "contact-form",
           type: "contactForm",
-          heading: "Hire me",
+          heading: "Send a message",
           intro:
-            "Placeholder form. Submissions are stored locally (or in Supabase when connected). Email delivery can be wired via Resend later.",
+            "Prefer async? Use the form. Or book time below if you want a live intro.",
           emailFallback: "hello@example.com",
+        },
+        {
+          id: "contact-calendly",
+          type: "calendly",
+          heading: "Book a 15-minute intro",
+          intro:
+            "Pick a slot that works for you. Update the Calendly URL in Theme settings or this block.",
+          height: 700,
         },
       ],
     },

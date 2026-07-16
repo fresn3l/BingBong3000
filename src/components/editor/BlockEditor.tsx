@@ -201,6 +201,48 @@ export function BlockEditor({
         </>
       ) : null}
 
+      {block.type === "calendly" ? (
+        <>
+          <Field label="Heading">
+            <input
+              className="editor-input"
+              value={block.heading || ""}
+              onChange={(e) => onChange({ ...block, heading: e.target.value })}
+            />
+          </Field>
+          <Field label="Intro">
+            <textarea
+              className="editor-input"
+              rows={2}
+              value={block.intro || ""}
+              onChange={(e) => onChange({ ...block, intro: e.target.value })}
+            />
+          </Field>
+          <Field label="Calendly URL (optional — falls back to Theme setting)">
+            <input
+              className="editor-input"
+              placeholder="https://calendly.com/you/15min"
+              value={block.url || ""}
+              onChange={(e) => onChange({ ...block, url: e.target.value })}
+            />
+          </Field>
+          <Field label="Embed height (px)">
+            <input
+              className="editor-input"
+              type="number"
+              min={480}
+              value={block.height || 700}
+              onChange={(e) =>
+                onChange({
+                  ...block,
+                  height: Number(e.target.value) || 700,
+                })
+              }
+            />
+          </Field>
+        </>
+      ) : null}
+
       {block.type === "image" ? (
         <>
           <Field label="Image URL">

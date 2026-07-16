@@ -45,7 +45,11 @@ export function LivePreview({
           </span>
         </div>
         {page ? (
-          <Blocks blocks={page.blocks} projects={data.projects} />
+          <Blocks
+            blocks={page.blocks}
+            projects={data.projects}
+            calendlyUrl={data.settings.calendlyUrl}
+          />
         ) : (
           <p className="p-8 text-[var(--color-muted)]">Select a page to preview.</p>
         )}

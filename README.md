@@ -61,11 +61,12 @@ When Supabase env vars are present, the app reads/writes there (with local file 
 
 - **Theme:** colors, fonts, spacing, site name, SEO, social links
 - **Pages:** create, rename, publish toggle, delete
-- **Blocks:** add / remove / drag-reorder section types (hero, rich text, projects, articles, CTA, contact form, image, stats, services)
+- **Blocks:** add / remove / drag-reorder section types (hero, rich text, projects, articles, CTA, contact form, Calendly, image, stats, services)
 - **Content fields:** text, links, images (upload)
 - **Projects:** dedicated tab for case-study cards (feeds Work project grids)
 - **Writing:** original posts and curated external articles
 - **Resume:** printable CV fields with live preview
+- **Calendly:** embed scheduling on Contact (set URL under Theme)
 - **Live preview** in the editor
 
 ## Resume

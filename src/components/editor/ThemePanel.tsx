@@ -101,6 +101,17 @@ export function ThemePanel({
             onChange={(e) => onChange({ ...settings, resumeUrl: e.target.value })}
           />
         </label>
+        <label className="mt-3 block">
+          <span className="editor-label">Calendly URL</span>
+          <input
+            className="editor-input"
+            placeholder="https://calendly.com/you/15min"
+            value={settings.calendlyUrl || ""}
+            onChange={(e) =>
+              onChange({ ...settings, calendlyUrl: e.target.value })
+            }
+          />
+        </label>
       </div>
 
       <div>

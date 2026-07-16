@@ -37,7 +37,9 @@ Who customizes the site?
 - [ ] Motion level: subtle, bold, or minimal?
 
 ### Contact & hire path
-- [ ] Contact method: form → email (Resend), store leads in Supabase only, mailto, and/or Calendly?
+- [x] Contact method: form → email (Resend), store leads in Supabase only, mailto, and/or Calendly?
+  - **Partial:** form + mailto + **Calendly embed block** shipped; set your URL in Theme → Calendly URL
+
 - [ ] Preferred email for hire inquiries?
 - [ ] LinkedIn / GitHub / other profile URLs?
 
@@ -58,6 +60,8 @@ Who customizes the site?
   - **Answered / built:** printable `/resume` page with print-to-PDF stylesheet (edit in admin Resume tab)
 
 ### Optional later (noted in plan)
-- [ ] Calendly embed as a block type?
+- [x] Calendly embed as a block type?
+  - **Done:** `calendly` block + Theme default URL; Contact page includes a booking section
+
 - [ ] Multi-user roles / collaboration?
 - [ ] Blog revisions / scheduling?
