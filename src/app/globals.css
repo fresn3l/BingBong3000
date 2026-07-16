@@ -1,0 +1,138 @@
+@import "tailwindcss";
+
+:root {
+  --color-bg: #0c1210;
+  --color-fg: #e8f0ea;
+  --color-muted: #9bb0a2;
+  --color-accent: #3dd68c;
+  --color-accent-fg: #062116;
+  --color-surface: #15201a;
+  --color-border: #2a3b32;
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Sora", system-ui, sans-serif;
+  --section-y: 5rem;
+  --content-max: 72rem;
+}
+
+@theme inline {
+  --color-background: var(--color-bg);
+  --color-foreground: var(--color-fg);
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-body);
+  background-image:
+    radial-gradient(ellipse at top left, rgba(61, 214, 140, 0.08), transparent 40%),
+    linear-gradient(180deg, var(--color-bg), #0a0f0d 40%, var(--color-bg));
+  min-height: 100vh;
+}
+
+.site-container {
+  width: min(100% - 2rem, var(--content-max));
+  margin-inline: auto;
+}
+
+.site-section {
+  padding-block: var(--section-y);
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-accent);
+  color: var(--color-accent-fg);
+  padding: 0.7rem 1.15rem;
+  font-weight: 600;
+  transition: transform 160ms ease, filter 160ms ease;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border);
+  color: var(--color-fg);
+  padding: 0.7rem 1.15rem;
+  transition: border-color 160ms ease, background 160ms ease;
+}
+
+.btn-secondary:hover {
+  border-color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-surface) 80%, transparent);
+}
+
+.field {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-fg);
+  padding: 0.7rem 0.85rem;
+  outline: none;
+}
+
+.field:focus {
+  border-color: var(--color-accent);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-rise {
+  animation: rise 700ms ease both;
+}
+
+.animate-fade {
+  animation: fade 900ms ease both;
+}
+
+.editor-shell {
+  background: #111;
+  color: #eee;
+  min-height: 100vh;
+}
+
+.editor-panel {
+  border: 1px solid #333;
+  background: #181818;
+}
+
+.editor-input {
+  width: 100%;
+  border: 1px solid #333;
+  background: #0f0f0f;
+  color: #eee;
+  padding: 0.5rem 0.65rem;
+  font-size: 0.875rem;
+}
+
+.editor-label {
+  display: block;
+  font-size: 0.75rem;
+  color: #999;
+  margin-bottom: 0.25rem;
+}

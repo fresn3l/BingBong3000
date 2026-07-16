@@ -1,0 +1,24 @@
+import { NextResponse } from "next/server";
+import { getSiteData, saveSiteData } from "@/lib/content/repository";
+import { isAdminAuthenticated } from "@/lib/auth";
+import type { SiteData } from "@/lib/content/types";
+
+export async function GET() {
+  const data = await getSiteData();
+  return NextResponse.json(data);
+}
+
+export async function PUT(request: Request) {
+  const ok = await isAdminAuthenticated();
+  if (!ok) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const body = (await request.json()) as SiteData;
+  if (!body?.settings || !Array.isArray(body.pages)) {
+    return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
+  }
+
+  const saved = await saveSiteData(body);
+  return NextResponse.json(saved);
+}
