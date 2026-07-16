@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Blocks } from "@/components/blocks/BlockRenderer";
-import { getPageBySlug, getSettings } from "@/lib/content/repository";
+import { getPageBySlug, getSettings, getSiteData } from "@/lib/content/repository";
 import { absoluteUrl } from "@/lib/site-url";
 
 export const dynamic = "force-dynamic";
@@ -27,7 +27,8 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
-  const page = await getPageBySlug("home");
+  const data = await getSiteData();
+  const page = data.pages.find((p) => p.slug === "home" && p.published);
   if (!page) notFound();
-  return <Blocks blocks={page.blocks} />;
+  return <Blocks blocks={page.blocks} projects={data.projects} />;
 }

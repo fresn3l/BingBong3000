@@ -376,81 +376,20 @@ export function BlockEditor({
               onChange={(e) => onChange({ ...block, intro: e.target.value })}
             />
           </Field>
-          {block.projects.map((project, index) => (
-            <div key={project.id} className="editor-panel space-y-2 p-2">
-              <Field label="Title">
-                <input
-                  className="editor-input"
-                  value={project.title}
-                  onChange={(e) => {
-                    const projects = [...block.projects];
-                    projects[index] = { ...project, title: e.target.value };
-                    onChange({ ...block, projects });
-                  }}
-                />
-              </Field>
-              <Field label="Summary">
-                <textarea
-                  className="editor-input"
-                  rows={2}
-                  value={project.summary}
-                  onChange={(e) => {
-                    const projects = [...block.projects];
-                    projects[index] = { ...project, summary: e.target.value };
-                    onChange({ ...block, projects });
-                  }}
-                />
-              </Field>
-              <Field label="Tags (comma-separated)">
-                <input
-                  className="editor-input"
-                  value={project.tags.join(", ")}
-                  onChange={(e) => {
-                    const projects = [...block.projects];
-                    projects[index] = {
-                      ...project,
-                      tags: e.target.value
-                        .split(",")
-                        .map((t) => t.trim())
-                        .filter(Boolean),
-                    };
-                    onChange({ ...block, projects });
-                  }}
-                />
-              </Field>
-              <Field label="Link">
-                <input
-                  className="editor-input"
-                  value={project.href || ""}
-                  onChange={(e) => {
-                    const projects = [...block.projects];
-                    projects[index] = { ...project, href: e.target.value };
-                    onChange({ ...block, projects });
-                  }}
-                />
-              </Field>
-            </div>
-          ))}
-          <button
-            type="button"
-            className="text-sm text-emerald-400"
-            onClick={() =>
-              onChange({
-                ...block,
-                projects: [
-                  ...block.projects,
-                  {
-                    id: crypto.randomUUID(),
-                    title: "Project",
-                    summary: "Summary",
-                    tags: [],
-                  },
-                ],
-              })
-            }
-          >
-            + Add project
-          </button>
+          <label className="flex items-center gap-2 text-sm text-zinc-400">
+            <input
+              type="checkbox"
+              checked={block.useSiteProjects !== false}
+              onChange={(e) =>
+                onChange({ ...block, useSiteProjects: e.target.checked })
+              }
+            />
+            Use Projects tab list (recommended)
+          </label>
+          <p className="text-xs text-zinc-500">
+            Manage project cards in the <strong>Projects</strong> admin tab.
+            Uncheck only if you need a one-off inline list on this block.
+          </p>
         </>
       ) : null}
 

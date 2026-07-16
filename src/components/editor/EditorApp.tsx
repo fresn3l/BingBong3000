@@ -9,10 +9,12 @@ import { BlocksPanel } from "./BlocksPanel";
 import { BlockEditor } from "./BlockEditor";
 import { LivePreview } from "./LivePreview";
 import { PostsPanel } from "./PostsPanel";
+import { ProjectsPanel } from "./ProjectsPanel";
 import { ResumePanel } from "./ResumePanel";
 import { ResumeDocument } from "@/components/resume/ResumeDocument";
+import { ProjectGridBlockView } from "@/components/blocks/ProjectGridBlock";
 
-type Tab = "theme" | "pages" | "blocks" | "posts" | "resume";
+type Tab = "theme" | "pages" | "blocks" | "posts" | "projects" | "resume";
 
 export function EditorApp() {
   const router = useRouter();
@@ -115,6 +117,7 @@ export function EditorApp() {
                 ["theme", "Theme"],
                 ["pages", "Pages"],
                 ["blocks", "Blocks"],
+                ["projects", "Projects"],
                 ["posts", "Writing"],
                 ["resume", "Resume"],
               ] as const
@@ -202,6 +205,12 @@ export function EditorApp() {
               onChange={(posts) => updateData((d) => ({ ...d, posts }))}
             />
           ) : null}
+          {tab === "projects" ? (
+            <ProjectsPanel
+              projects={data.projects}
+              onChange={(projects) => updateData((d) => ({ ...d, projects }))}
+            />
+          ) : null}
           {tab === "resume" ? (
             <ResumePanel
               resume={data.resume}
@@ -214,6 +223,34 @@ export function EditorApp() {
           <div className="max-h-[calc(100vh-53px)] overflow-y-auto bg-zinc-950 p-4">
             <div className="mx-auto max-w-[8.5in] scale-[0.92] origin-top">
               <ResumeDocument resume={data.resume} />
+            </div>
+          </div>
+        ) : tab === "projects" ? (
+          <div className="max-h-[calc(100vh-53px)] overflow-y-auto bg-zinc-950 p-4">
+            <div
+              className="overflow-hidden border border-zinc-800"
+              style={{
+                background: data.settings.theme.colors.background,
+                color: data.settings.theme.colors.foreground,
+                ["--color-bg" as string]: data.settings.theme.colors.background,
+                ["--color-fg" as string]: data.settings.theme.colors.foreground,
+                ["--color-muted" as string]: data.settings.theme.colors.muted,
+                ["--color-accent" as string]: data.settings.theme.colors.accent,
+                ["--color-surface" as string]: data.settings.theme.colors.surface,
+                ["--color-border" as string]: data.settings.theme.colors.border,
+              }}
+            >
+              <ProjectGridBlockView
+                block={{
+                  id: "preview-grid",
+                  type: "projectGrid",
+                  heading: "Selected work",
+                  intro: "Live preview of published projects",
+                  useSiteProjects: true,
+                  projects: [],
+                }}
+                siteProjects={data.projects}
+              />
             </div>
           </div>
         ) : (

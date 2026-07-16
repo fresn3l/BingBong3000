@@ -214,32 +214,8 @@ export const seedData: SiteData = {
           type: "projectGrid",
           heading: "Selected work",
           intro: "Technical credibility for solutions engineering interviews.",
-          projects: [
-            {
-              id: "p1",
-              title: "API integration demo kit",
-              summary:
-                "Built a reusable demo environment that walks buyers through auth, webhooks, and a happy-path workflow in under 15 minutes.",
-              tags: ["APIs", "Demo", "DX"],
-              href: "#",
-            },
-            {
-              id: "p2",
-              title: "Customer health dashboard",
-              summary:
-                "Designed a metrics view that sales and CS used to spot expansion signals — not just vanity charts.",
-              tags: ["Data", "Product", "Narrative"],
-              href: "#",
-            },
-            {
-              id: "p3",
-              title: "Security questionnaire playbook",
-              summary:
-                "Turned recurring RFP / security questions into a living knowledge base with clear owners and sample answers.",
-              tags: ["Process", "Trust", "Sales"],
-              href: "#",
-            },
-          ],
+          useSiteProjects: true,
+          projects: [],
         },
       ],
     },
@@ -348,6 +324,38 @@ export const seedData: SiteData = {
     },
   ],
   leads: [],
+  projects: [
+    {
+      id: "p1",
+      title: "API integration demo kit",
+      summary:
+        "Built a reusable demo environment that walks buyers through auth, webhooks, and a happy-path workflow in under 15 minutes.",
+      tags: ["APIs", "Demo", "DX"],
+      href: "#",
+      published: true,
+      featured: true,
+    },
+    {
+      id: "p2",
+      title: "Customer health dashboard",
+      summary:
+        "Designed a metrics view that sales and CS used to spot expansion signals — not just vanity charts.",
+      tags: ["Data", "Product", "Narrative"],
+      href: "#",
+      published: true,
+      featured: true,
+    },
+    {
+      id: "p3",
+      title: "Security questionnaire playbook",
+      summary:
+        "Turned recurring RFP / security questions into a living knowledge base with clear owners and sample answers.",
+      tags: ["Process", "Trust", "Sales"],
+      href: "#",
+      published: true,
+      featured: true,
+    },
+  ],
   resume: {
     name: "Alex Rivera",
     headline: "Solutions / Sales Engineer",

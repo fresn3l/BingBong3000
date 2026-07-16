@@ -22,6 +22,7 @@ export async function PUT(request: Request) {
   const saved = await saveSiteData({
     ...body,
     resume: body.resume,
+    projects: body.projects ?? [],
     posts: body.posts ?? [],
     leads: body.leads ?? [],
   }).catch((err: unknown) => {

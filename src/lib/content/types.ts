@@ -38,12 +38,21 @@ export interface ProjectItem {
   imageUrl?: string;
 }
 
+/** Site-level project for the Projects admin tab and Work grids */
+export interface Project extends ProjectItem {
+  published: boolean;
+  featured?: boolean;
+}
+
 export interface ProjectGridBlock {
   id: string;
   type: "projectGrid";
   heading?: string;
   intro?: string;
+  /** Legacy inline projects; site-level `projects` take precedence when present */
   projects: ProjectItem[];
+  /** When true (default), render published site projects instead of inline list */
+  useSiteProjects?: boolean;
 }
 
 export interface ArticleItem {
@@ -253,6 +262,7 @@ export interface SiteData {
   posts: Post[];
   leads: ContactLead[];
   resume: ResumeData;
+  projects: Project[];
 }
 
 export const BLOCK_TYPE_LABELS: Record<BlockType, string> = {

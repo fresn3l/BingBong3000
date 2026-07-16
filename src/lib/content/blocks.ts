@@ -25,14 +25,8 @@ export function createEmptyBlock(type: BlockType): Block {
         id,
         type: "projectGrid",
         heading: "Projects",
-        projects: [
-          {
-            id: crypto.randomUUID(),
-            title: "Project title",
-            summary: "Short summary.",
-            tags: ["Tag"],
-          },
-        ],
+        useSiteProjects: true,
+        projects: [],
       };
     case "articleList":
       return {

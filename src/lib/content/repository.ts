@@ -11,10 +11,12 @@ import type {
 } from "./types";
 import { ensureTheme } from "@/lib/theme";
 import { ensureResume } from "./resume";
+import { ensureProjects } from "./projects";
 
 const DATA_PATH = path.join(process.cwd(), "data", "site.json");
 
 function normalizeSiteData(data: SiteData): SiteData {
+  const pages = data.pages || [];
   return {
     ...data,
     settings: {
@@ -23,6 +25,10 @@ function normalizeSiteData(data: SiteData): SiteData {
       resumeUrl: data.settings.resumeUrl || "/resume",
     },
     resume: ensureResume(data.resume),
+    projects: ensureProjects(data.projects, pages),
+    posts: data.posts || [],
+    leads: data.leads || [],
+    pages,
   };
 }
 
@@ -72,7 +78,11 @@ async function loadFromSupabase(): Promise<SiteData | null> {
 
     const raw = settingsRow.data as
       | SiteSettings
-      | { settings: SiteSettings; resume?: SiteData["resume"] };
+      | {
+          settings: SiteSettings;
+          resume?: SiteData["resume"];
+          projects?: SiteData["projects"];
+        };
 
     const settings =
       raw && typeof raw === "object" && "settings" in raw
@@ -82,19 +92,26 @@ async function loadFromSupabase(): Promise<SiteData | null> {
       raw && typeof raw === "object" && "settings" in raw
         ? raw.resume
         : undefined;
+    const projects =
+      raw && typeof raw === "object" && "settings" in raw
+        ? raw.projects
+        : undefined;
+
+    const mappedPages = (pages || []).map((p) => ({
+      id: p.id,
+      slug: p.slug,
+      title: p.title,
+      published: p.published,
+      seoDescription: p.seo_description ?? undefined,
+      blocks: p.blocks,
+      updatedAt: p.updated_at,
+    }));
 
     return {
       settings,
       resume: ensureResume(resume),
-      pages: (pages || []).map((p) => ({
-        id: p.id,
-        slug: p.slug,
-        title: p.title,
-        published: p.published,
-        seoDescription: p.seo_description ?? undefined,
-        blocks: p.blocks,
-        updatedAt: p.updated_at,
-      })),
+      projects: ensureProjects(projects, mappedPages),
+      pages: mappedPages,
       posts: (posts || []).map((p) => ({
         id: p.id,
         slug: p.slug,
@@ -125,7 +142,11 @@ async function saveToSupabase(data: SiteData) {
   const sb = adminClient();
   await sb.from("site_settings").upsert({
     id: 1,
-    data: { settings: data.settings, resume: data.resume },
+    data: {
+      settings: data.settings,
+      resume: data.resume,
+      projects: data.projects,
+    },
     updated_at: new Date().toISOString(),
   });
 
@@ -260,6 +281,11 @@ export async function addLead(
 export async function getResume() {
   const data = await getSiteData();
   return data.resume;
+}
+
+export async function getProjects() {
+  const data = await getSiteData();
+  return data.projects.filter((p) => p.published);
 }
 
 export { isSupabaseConfigured };

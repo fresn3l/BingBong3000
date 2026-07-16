@@ -63,6 +63,7 @@ When Supabase env vars are present, the app reads/writes there (with local file 
 - **Pages:** create, rename, publish toggle, delete
 - **Blocks:** add / remove / drag-reorder section types (hero, rich text, projects, articles, CTA, contact form, image, stats, services)
 - **Content fields:** text, links, images (upload)
+- **Projects:** dedicated tab for case-study cards (feeds Work project grids)
 - **Writing:** original posts and curated external articles
 - **Resume:** printable CV fields with live preview
 - **Live preview** in the editor

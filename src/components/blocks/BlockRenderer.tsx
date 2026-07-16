@@ -1,4 +1,4 @@
-import type { Block } from "@/lib/content/types";
+import type { Block, Project } from "@/lib/content/types";
 import { HeroBlockView } from "./HeroBlock";
 import { RichTextBlockView } from "./RichTextBlock";
 import { ProjectGridBlockView } from "./ProjectGridBlock";
@@ -9,14 +9,20 @@ import { ImageBlockView } from "./ImageBlock";
 import { StatsBlockView } from "./StatsBlock";
 import { ServicesBlockView } from "./ServicesBlock";
 
-export function BlockRenderer({ block }: { block: Block }) {
+export function BlockRenderer({
+  block,
+  projects = [],
+}: {
+  block: Block;
+  projects?: Project[];
+}) {
   switch (block.type) {
     case "hero":
       return <HeroBlockView block={block} />;
     case "richText":
       return <RichTextBlockView block={block} />;
     case "projectGrid":
-      return <ProjectGridBlockView block={block} />;
+      return <ProjectGridBlockView block={block} siteProjects={projects} />;
     case "articleList":
       return <ArticleListBlockView block={block} />;
     case "cta":
@@ -34,11 +40,17 @@ export function BlockRenderer({ block }: { block: Block }) {
   }
 }
 
-export function Blocks({ blocks }: { blocks: Block[] }) {
+export function Blocks({
+  blocks,
+  projects = [],
+}: {
+  blocks: Block[];
+  projects?: Project[];
+}) {
   return (
     <div className="flex flex-col">
       {blocks.map((block) => (
-        <BlockRenderer key={block.id} block={block} />
+        <BlockRenderer key={block.id} block={block} projects={projects} />
       ))}
     </div>
   );

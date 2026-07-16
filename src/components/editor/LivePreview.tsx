@@ -45,7 +45,7 @@ export function LivePreview({
           </span>
         </div>
         {page ? (
-          <Blocks blocks={page.blocks} />
+          <Blocks blocks={page.blocks} projects={data.projects} />
         ) : (
           <p className="p-8 text-[var(--color-muted)]">Select a page to preview.</p>
         )}
