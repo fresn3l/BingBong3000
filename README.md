@@ -61,7 +61,14 @@ When Supabase env vars are present, the app reads/writes there (with local file 
 - **Blocks:** add / remove / drag-reorder section types (hero, rich text, projects, articles, CTA, contact form, image, stats, services)
 - **Content fields:** text, links, images (upload)
 - **Writing:** original posts and curated external articles
+- **Resume:** printable CV fields with live preview
 - **Live preview** in the editor
+
+## Resume
+
+Open [`/resume`](/resume) for a printable CV. Click **Print / Save PDF** and choose “Save as PDF” in the browser dialog (US Letter).
+
+Edit resume content in the admin under the **Resume** tab.
 
 ## Deploy (Vercel)
 

@@ -205,11 +205,54 @@ export interface ContactLead {
   createdAt: string;
 }
 
+export interface ResumeLink {
+  label: string;
+  href: string;
+}
+
+export interface ResumeExperience {
+  id: string;
+  company: string;
+  role: string;
+  location?: string;
+  start: string;
+  end?: string;
+  bullets: string[];
+}
+
+export interface ResumeEducation {
+  id: string;
+  school: string;
+  degree: string;
+  year?: string;
+  details?: string;
+}
+
+export interface ResumeSkillGroup {
+  id: string;
+  category: string;
+  items: string[];
+}
+
+export interface ResumeData {
+  name: string;
+  headline: string;
+  location?: string;
+  email?: string;
+  phone?: string;
+  summary?: string;
+  links: ResumeLink[];
+  experience: ResumeExperience[];
+  education: ResumeEducation[];
+  skills: ResumeSkillGroup[];
+}
+
 export interface SiteData {
   settings: SiteSettings;
   pages: Page[];
   posts: Post[];
   leads: ContactLead[];
+  resume: ResumeData;
 }
 
 export const BLOCK_TYPE_LABELS: Record<BlockType, string> = {

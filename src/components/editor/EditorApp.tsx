@@ -9,8 +9,10 @@ import { BlocksPanel } from "./BlocksPanel";
 import { BlockEditor } from "./BlockEditor";
 import { LivePreview } from "./LivePreview";
 import { PostsPanel } from "./PostsPanel";
+import { ResumePanel } from "./ResumePanel";
+import { ResumeDocument } from "@/components/resume/ResumeDocument";
 
-type Tab = "theme" | "pages" | "blocks" | "posts";
+type Tab = "theme" | "pages" | "blocks" | "posts" | "resume";
 
 export function EditorApp() {
   const router = useRouter();
@@ -114,6 +116,7 @@ export function EditorApp() {
                 ["pages", "Pages"],
                 ["blocks", "Blocks"],
                 ["posts", "Writing"],
+                ["resume", "Resume"],
               ] as const
             ).map(([id, label]) => (
               <button
@@ -199,9 +202,23 @@ export function EditorApp() {
               onChange={(posts) => updateData((d) => ({ ...d, posts }))}
             />
           ) : null}
+          {tab === "resume" ? (
+            <ResumePanel
+              resume={data.resume}
+              onChange={(resume) => updateData((d) => ({ ...d, resume }))}
+            />
+          ) : null}
         </aside>
 
-        <LivePreview data={data} page={page} />
+        {tab === "resume" ? (
+          <div className="max-h-[calc(100vh-53px)] overflow-y-auto bg-zinc-950 p-4">
+            <div className="mx-auto max-w-[8.5in] scale-[0.92] origin-top">
+              <ResumeDocument resume={data.resume} />
+            </div>
+          </div>
+        ) : (
+          <LivePreview data={data} page={page} />
+        )}
       </div>
     </div>
   );

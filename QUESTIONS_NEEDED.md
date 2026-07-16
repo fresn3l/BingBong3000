@@ -51,7 +51,8 @@ Who customizes the site?
 - [ ] Target keywords or job titles for SEO copy?
 
 ### Resume
-- [ ] Resume PDF ready to upload, or placeholder link for now?
+- [x] Resume PDF ready to upload, or placeholder link for now?
+  - **Answered / built:** printable `/resume` page with print-to-PDF stylesheet (edit in admin Resume tab)
 
 ### Optional later (noted in plan)
 - [ ] Calendly embed as a block type?

@@ -4,7 +4,7 @@ import { ThemeToggle } from "./ThemeToggle";
 
 export function SiteHeader({ settings }: { settings: SiteSettings }) {
   return (
-    <header className="sticky top-0 z-40 border-b border-[var(--color-border)]/80 bg-[var(--color-bg)]/90 backdrop-blur-md">
+    <header className="no-print sticky top-0 z-40 border-b border-[var(--color-border)]/80 bg-[var(--color-bg)]/90 backdrop-blur-md">
       <div className="site-container flex items-center justify-between gap-6 py-4">
         <Link
           href="/"
@@ -43,7 +43,7 @@ export function SiteHeader({ settings }: { settings: SiteSettings }) {
 
 export function SiteFooter({ settings }: { settings: SiteSettings }) {
   return (
-    <footer className="mt-auto border-t border-[var(--color-border)]">
+    <footer className="no-print mt-auto border-t border-[var(--color-border)]">
       <div className="site-container flex flex-col gap-4 py-10 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="font-[family-name:var(--font-display)] text-lg text-[var(--color-fg)]">

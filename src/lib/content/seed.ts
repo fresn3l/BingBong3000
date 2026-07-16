@@ -14,6 +14,7 @@ export const seedData: SiteData = {
       { label: "About", href: "/about" },
       { label: "Work", href: "/work" },
       { label: "Writing", href: "/writing" },
+      { label: "Resume", href: "/resume" },
       { label: "Contact", href: "/contact" },
     ],
     footerText: "Open to solutions engineering and sales engineering roles.",
@@ -22,7 +23,7 @@ export const seedData: SiteData = {
       github: "https://github.com",
       email: "hello@example.com",
     },
-    resumeUrl: "#",
+    resumeUrl: "/resume",
     theme: {
       // Light: cool ivory + navy + hunter green (corporate / country-club)
       colors: {
@@ -347,4 +348,66 @@ export const seedData: SiteData = {
     },
   ],
   leads: [],
+  resume: {
+    name: "Alex Rivera",
+    headline: "Solutions / Sales Engineer",
+    location: "United States",
+    email: "hello@example.com",
+    phone: "",
+    summary:
+      "Computer science background moving into solutions and sales engineering. I connect product capability to customer outcomes through discovery, demos, and clear technical narrative.",
+    links: [
+      { label: "LinkedIn", href: "https://linkedin.com" },
+      { label: "GitHub", href: "https://github.com" },
+      { label: "Portfolio", href: "/" },
+    ],
+    experience: [
+      {
+        id: "exp-1",
+        company: "Placeholder Company",
+        role: "Solutions Engineer (aspiring) / Technical projects",
+        location: "Remote",
+        start: "2024",
+        end: "Present",
+        bullets: [
+          "Built demo environments and walkthroughs that map product capabilities to buyer workflows.",
+          "Translated technical constraints into language sales and customers can act on.",
+          "Partnered across product and engineering to keep customer commitments realistic.",
+        ],
+      },
+      {
+        id: "exp-2",
+        company: "University / Personal projects",
+        role: "Software & systems projects",
+        location: "",
+        start: "2021",
+        end: "2024",
+        bullets: [
+          "Shipped full-stack projects spanning APIs, UIs, and data pipelines.",
+          "Practiced technical writing and presentation for non-expert audiences.",
+        ],
+      },
+    ],
+    education: [
+      {
+        id: "edu-1",
+        school: "Placeholder University",
+        degree: "B.S. Computer Science",
+        year: "2024",
+        details: "Coursework in systems, networks, and human-computer interaction.",
+      },
+    ],
+    skills: [
+      {
+        id: "sk-1",
+        category: "Technical",
+        items: ["APIs", "Web apps", "SQL", "Cloud basics", "Debugging"],
+      },
+      {
+        id: "sk-2",
+        category: "Customer-facing",
+        items: ["Discovery", "Demos", "Technical storytelling", "RFP support"],
+      },
+    ],
+  },
 };

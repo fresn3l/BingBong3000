@@ -19,6 +19,11 @@ export async function PUT(request: Request) {
     return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
   }
 
-  const saved = await saveSiteData(body);
+  const saved = await saveSiteData({
+    ...body,
+    resume: body.resume,
+    posts: body.posts ?? [],
+    leads: body.leads ?? [],
+  });
   return NextResponse.json(saved);
 }

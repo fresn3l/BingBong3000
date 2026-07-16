@@ -10,6 +10,7 @@ import type {
   SiteSettings,
 } from "./types";
 import { ensureTheme } from "@/lib/theme";
+import { ensureResume } from "./resume";
 
 const DATA_PATH = path.join(process.cwd(), "data", "site.json");
 
@@ -19,7 +20,9 @@ function normalizeSiteData(data: SiteData): SiteData {
     settings: {
       ...data.settings,
       theme: ensureTheme(data.settings.theme),
+      resumeUrl: data.settings.resumeUrl || "/resume",
     },
+    resume: ensureResume(data.resume),
   };
 }
 
@@ -67,8 +70,22 @@ async function loadFromSupabase(): Promise<SiteData | null> {
 
     if (!settingsRow?.data) return null;
 
+    const raw = settingsRow.data as
+      | SiteSettings
+      | { settings: SiteSettings; resume?: SiteData["resume"] };
+
+    const settings =
+      raw && typeof raw === "object" && "settings" in raw
+        ? raw.settings
+        : (raw as SiteSettings);
+    const resume =
+      raw && typeof raw === "object" && "settings" in raw
+        ? raw.resume
+        : undefined;
+
     return {
-      settings: settingsRow.data as SiteSettings,
+      settings,
+      resume: ensureResume(resume),
       pages: (pages || []).map((p) => ({
         id: p.id,
         slug: p.slug,
@@ -108,7 +125,7 @@ async function saveToSupabase(data: SiteData) {
   const sb = adminClient();
   await sb.from("site_settings").upsert({
     id: 1,
-    data: data.settings,
+    data: { settings: data.settings, resume: data.resume },
     updated_at: new Date().toISOString(),
   });
 
@@ -149,13 +166,13 @@ export async function getSiteData(): Promise<SiteData> {
 }
 
 export async function saveSiteData(data: SiteData): Promise<SiteData> {
-  const next = {
+  const next = normalizeSiteData({
     ...data,
     pages: data.pages.map((p) => ({
       ...p,
       updatedAt: new Date().toISOString(),
     })),
-  };
+  });
 
   if (isSupabaseConfigured()) {
     try {
@@ -229,6 +246,11 @@ export async function addLead(
   data.leads = [entry, ...data.leads];
   await writeLocal(data);
   return entry;
+}
+
+export async function getResume() {
+  const data = await getSiteData();
+  return data.resume;
 }
 
 export { isSupabaseConfigured };
