@@ -1,18 +1,21 @@
 import type { Metadata } from "next";
-import { Fraunces, Sora } from "next/font/google";
+import { Cormorant_Garamond, Source_Sans_3 } from "next/font/google";
 import { getSettings } from "@/lib/content/repository";
-import { themeToCssVars } from "@/lib/theme";
+import { ensureTheme, themeToCssVars } from "@/lib/theme";
+import { themeInitScript } from "@/components/layout/ThemeToggle";
 import "./globals.css";
 
-const fraunces = Fraunces({
+const display = Cormorant_Garamond({
   subsets: ["latin"],
-  variable: "--font-fraunces",
+  weight: ["500", "600", "700"],
+  variable: "--font-display-loaded",
   display: "swap",
 });
 
-const sora = Sora({
+const body = Source_Sans_3({
   subsets: ["latin"],
-  variable: "--font-sora",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-body-loaded",
   display: "swap",
 });
 
@@ -35,16 +38,24 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const settings = await getSettings();
-  const cssVars = themeToCssVars(settings.theme);
+  const theme = ensureTheme(settings.theme);
+  const cssVars = themeToCssVars(theme);
 
   return (
-    <html lang="en" className={`${fraunces.variable} ${sora.variable} h-full`}>
+    <html
+      lang="en"
+      className={`${display.variable} ${body.variable} h-full`}
+      suppressHydrationWarning
+    >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body
         className="min-h-full antialiased"
         style={{
           ...cssVars,
-          ["--font-display" as string]: `var(--font-fraunces), "${settings.theme.fonts.display}", Georgia, serif`,
-          ["--font-body" as string]: `var(--font-sora), "${settings.theme.fonts.body}", system-ui, sans-serif`,
+          ["--font-display" as string]: `var(--font-display-loaded), "${theme.fonts.display}", "Times New Roman", serif`,
+          ["--font-body" as string]: `var(--font-body-loaded), "${theme.fonts.body}", system-ui, sans-serif`,
         }}
       >
         {children}

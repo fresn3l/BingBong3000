@@ -1,7 +1,18 @@
 "use client";
 
-import type { SiteSettings } from "@/lib/content/types";
-import { FONT_OPTIONS } from "@/lib/theme";
+import { useState } from "react";
+import type { SiteSettings, ThemeColors } from "@/lib/content/types";
+import { DEFAULT_DARK_COLORS, FONT_OPTIONS } from "@/lib/theme";
+
+const COLOR_FIELDS = [
+  ["background", "Background"],
+  ["foreground", "Foreground"],
+  ["muted", "Muted"],
+  ["accent", "Accent"],
+  ["accentForeground", "Accent text"],
+  ["surface", "Surface"],
+  ["border", "Border"],
+] as const;
 
 export function ThemePanel({
   settings,
@@ -11,13 +22,27 @@ export function ThemePanel({
   onChange: (settings: SiteSettings) => void;
 }) {
   const theme = settings.theme;
+  const darkColors = theme.darkColors || DEFAULT_DARK_COLORS;
+  const [palette, setPalette] = useState<"light" | "dark">("light");
 
-  function setColor(key: keyof typeof theme.colors, value: string) {
+  function setColor(key: keyof ThemeColors, value: string) {
+    if (palette === "light") {
+      onChange({
+        ...settings,
+        theme: { ...theme, colors: { ...theme.colors, [key]: value } },
+      });
+      return;
+    }
     onChange({
       ...settings,
-      theme: { ...theme, colors: { ...theme.colors, [key]: value } },
+      theme: {
+        ...theme,
+        darkColors: { ...darkColors, [key]: value },
+      },
     });
   }
+
+  const active = palette === "light" ? theme.colors : darkColors;
 
   return (
     <div className="space-y-5">
@@ -79,33 +104,48 @@ export function ThemePanel({
       </div>
 
       <div>
-        <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-300">
-          Colors
-        </h2>
+        <div className="flex items-center justify-between gap-2">
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-300">
+            Colors
+          </h2>
+          <div className="flex gap-1 text-xs">
+            <button
+              type="button"
+              onClick={() => setPalette("light")}
+              className={`px-2 py-1 ${
+                palette === "light" ? "bg-zinc-700 text-white" : "text-zinc-400"
+              }`}
+            >
+              Light
+            </button>
+            <button
+              type="button"
+              onClick={() => setPalette("dark")}
+              className={`px-2 py-1 ${
+                palette === "dark" ? "bg-zinc-700 text-white" : "text-zinc-400"
+              }`}
+            >
+              Dark
+            </button>
+          </div>
+        </div>
+        <p className="mt-1 text-xs text-zinc-500">
+          Corporate / country-club palette. Visitors toggle light/dark on the public site.
+        </p>
         <div className="mt-3 grid grid-cols-2 gap-3">
-          {(
-            [
-              ["background", "Background"],
-              ["foreground", "Foreground"],
-              ["muted", "Muted"],
-              ["accent", "Accent"],
-              ["accentForeground", "Accent text"],
-              ["surface", "Surface"],
-              ["border", "Border"],
-            ] as const
-          ).map(([key, label]) => (
+          {COLOR_FIELDS.map(([key, label]) => (
             <label key={key} className="block">
               <span className="editor-label">{label}</span>
               <div className="flex gap-2">
                 <input
                   type="color"
-                  value={theme.colors[key]}
+                  value={active[key]}
                   onChange={(e) => setColor(key, e.target.value)}
                   className="h-9 w-10 cursor-pointer border border-zinc-700 bg-transparent"
                 />
                 <input
                   className="editor-input"
-                  value={theme.colors[key]}
+                  value={active[key]}
                   onChange={(e) => setColor(key, e.target.value)}
                 />
               </div>

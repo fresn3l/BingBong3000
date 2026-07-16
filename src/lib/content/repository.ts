@@ -9,8 +9,19 @@ import type {
   SiteData,
   SiteSettings,
 } from "./types";
+import { ensureTheme } from "@/lib/theme";
 
 const DATA_PATH = path.join(process.cwd(), "data", "site.json");
+
+function normalizeSiteData(data: SiteData): SiteData {
+  return {
+    ...data,
+    settings: {
+      ...data.settings,
+      theme: ensureTheme(data.settings.theme),
+    },
+  };
+}
 
 function isSupabaseConfigured() {
   return Boolean(
@@ -30,7 +41,7 @@ function adminClient() {
 async function ensureLocalFile(): Promise<SiteData> {
   try {
     const raw = await fs.readFile(DATA_PATH, "utf8");
-    return JSON.parse(raw) as SiteData;
+    return normalizeSiteData(JSON.parse(raw) as SiteData);
   } catch {
     await fs.mkdir(path.dirname(DATA_PATH), { recursive: true });
     await fs.writeFile(DATA_PATH, JSON.stringify(seedData, null, 2), "utf8");
@@ -132,7 +143,7 @@ async function saveToSupabase(data: SiteData) {
 export async function getSiteData(): Promise<SiteData> {
   if (isSupabaseConfigured()) {
     const remote = await loadFromSupabase();
-    if (remote) return remote;
+    if (remote) return normalizeSiteData(remote);
   }
   return ensureLocalFile();
 }

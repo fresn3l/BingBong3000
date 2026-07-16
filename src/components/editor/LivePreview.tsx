@@ -26,6 +26,14 @@ export function LivePreview({
           background: "var(--color-bg)",
           color: "var(--color-fg)",
           fontFamily: "var(--font-body)",
+          ["--color-bg" as string]: data.settings.theme.colors.background,
+          ["--color-fg" as string]: data.settings.theme.colors.foreground,
+          ["--color-muted" as string]: data.settings.theme.colors.muted,
+          ["--color-accent" as string]: data.settings.theme.colors.accent,
+          ["--color-accent-fg" as string]:
+            data.settings.theme.colors.accentForeground,
+          ["--color-surface" as string]: data.settings.theme.colors.surface,
+          ["--color-border" as string]: data.settings.theme.colors.border,
         }}
       >
         <div className="border-b border-[var(--color-border)] px-6 py-4 text-sm">

@@ -132,16 +132,21 @@ export interface NavItem {
   href: string;
 }
 
+export interface ThemeColors {
+  background: string;
+  foreground: string;
+  muted: string;
+  accent: string;
+  accentForeground: string;
+  surface: string;
+  border: string;
+}
+
 export interface ThemeSettings {
-  colors: {
-    background: string;
-    foreground: string;
-    muted: string;
-    accent: string;
-    accentForeground: string;
-    surface: string;
-    border: string;
-  };
+  /** Light mode palette (corporate / country-club clean) */
+  colors: ThemeColors;
+  /** Dark mode palette */
+  darkColors: ThemeColors;
   fonts: {
     display: string;
     body: string;

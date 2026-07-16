@@ -29,9 +29,11 @@ Who customizes the site?
 - [ ] Logo or wordmark assets?
 - [ ] Existing colors / fonts, or invent from the seeded theme?
 - [ ] Reference sites you like (links)?
-- [ ] Visual tone: minimal, editorial, bold/experimental, corporate-clean, playful?
+- [x] Visual tone: minimal, editorial, bold/experimental, corporate-clean, playful?
+  - **Answered:** corporate clean / country club corporate
 - [ ] Hard “do nots” for the look?
-- [ ] Dark mode: required, optional toggle, or light-only for MVP?
+- [x] Dark mode: required, optional toggle, or light-only for MVP?
+  - **Answered:** light/dark mode toggle
 - [ ] Motion level: subtle, bold, or minimal?
 
 ### Contact & hire path
